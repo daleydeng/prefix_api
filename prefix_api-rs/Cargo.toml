@@ -1,5 +1,5 @@
 [package]
-name = "prefix_api-rs"
+name = "prefix_api"
 version = "0.1.0"
 edition = "2021"
 
