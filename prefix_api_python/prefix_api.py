@@ -54,7 +54,7 @@ def upload(ctx, pkgs):
             "X-File-Name": name,
             "X-File-SHA256": sha256,
             "Authorization": f"Bearer {token}",
-            "Content-Length": str(len(data) + 1),
+            "Content-Length": str(len(data)),
             "Content-Type": "application/octet-stream",
         }
 
