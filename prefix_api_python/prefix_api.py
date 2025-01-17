@@ -11,6 +11,7 @@ MAX_PKG_SIZE = 100 * 1024 * 1024
 API_TPLS = {
     'repo.prefix.dev': {
         'upload': "https://prefix.dev/api/v1/upload/{channel}",
+        'delete_channel': "https://prefix.dev//api/v1/delete/{channel}",
         'delete': "https://prefix.dev//api/v1/delete/{channel}/{subdir}/{pkg}",
     }
 }
@@ -80,6 +81,21 @@ def delete(ctx, pkgs):
         print (f"deleting package {pkg_name} with {delete_url}")
         r = requests.delete(delete_url, headers=headers)
         print(f"deleted package {pkg_name} with status  {r.status_code}")
+
+# not work
+@cli.command()
+@click.argument("channel")
+@click.pass_context
+def delete_channel(ctx, channel):
+    repo = ctx.obj['repo']
+    token = ctx.obj['token']
+    url = API_TPLS[repo]['delete_channel'].format(channel=channel)
+    headers = {
+        "Authorization": f"Bearer {token}",
+    }
+    print (f"deleting channel {channel} with {url}")
+    r = requests.delete(url, headers=headers)
+    print(f"deleted channel {channel} with status  {r.status_code}")
 
 if __name__ == "__main__":
     cli(obj={})

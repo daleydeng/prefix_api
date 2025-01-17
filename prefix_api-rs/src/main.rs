@@ -119,7 +119,8 @@ async fn main() {
     ].into_iter().collect();
 
     let token = if token.ends_with(".json") {
-        let token: PathBuf = shellexpand::tilde(token).into_owned().into();
+        let token = shellexpand::tilde(token);
+        let token: &Path = token.as_ref().as_ref();
         let json_str = String::from_utf8(fs::read(token).await.unwrap()).unwrap();
         let auth_data: HashMap<String, AuthValue> = serde_json::from_str(&json_str).unwrap();
         auth_data.get(repo).unwrap().token.clone()
